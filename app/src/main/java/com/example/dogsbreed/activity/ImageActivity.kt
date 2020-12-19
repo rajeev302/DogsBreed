@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.dogsbreed.R
 import com.example.dogsbreed.viewmodel.ImageActivityViewModel
 import kotlinx.android.synthetic.main.activity_image.*
@@ -31,7 +32,7 @@ class ImageActivity : AppCompatActivity() {
 
     private fun fireApiCall(){
         viewmodel.getImageData({
-
+                               
         }, {
 
         })
