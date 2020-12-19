@@ -31,4 +31,8 @@ class BreedListAdapter(
     inner class BreedListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val breedTextView: TextView = itemView.findViewById(R.id.breed_name_text_view)
     }
+
+    interface BreedLisAdapterCallback {
+        fun rowClicked(position: Int)
+    }
 }

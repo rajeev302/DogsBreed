@@ -24,20 +24,12 @@ class BreedListViewModel(application: Application): AndroidViewModel(application
 
     val breedList = ArrayList<String>()
     private val repository = Respository()
-
-    init {
-        getBreedList({
-                     println("test_breed_dogs $breedList")
-        }, {})
-    }
-//
     fun getBreedList(success: () -> Unit, failure: (message: String) -> Unit) = launch {
         repository.getBreedList()?.let {
             breedList.clear()
             it.message?.keys?.forEach {
                 breedList.add(it)
             }
-            println("test_breed_dogs $breedList")
             success.invoke()
         }?:run {
             failure.invoke("failed to get message")

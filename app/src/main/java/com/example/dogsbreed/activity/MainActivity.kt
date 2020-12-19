@@ -1,5 +1,6 @@
 package com.example.dogsbreed.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,7 +23,7 @@ private lateinit var breedAdapter: BreedListAdapter
 private lateinit var noDataAvailable: TextView
 private lateinit var progressBar: ProgressBar
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -53,5 +54,11 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         breedRecyclerView.layoutManager = layoutManager
         breedRecyclerView.adapter = breedAdapter
+    }
+
+    override fun rowClicked(position: Int) {
+        val intent = Intent(this, ImageActivity::class.java)
+        intent.putExtra(ImageActivity.DOG_BREED_NAME, viewmodel.breedList[position])
+        startActivity(intent)
     }
 }

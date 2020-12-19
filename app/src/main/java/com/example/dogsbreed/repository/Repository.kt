@@ -22,7 +22,7 @@ class Respository: CoroutineScope {
         }.await()
     }
 
-    suspend fun getImageData(context: Context, breed_name: String): ImageDataResponseModel? {
+    suspend fun getImageData(breed_name: String): ImageDataResponseModel? {
         return CoroutineScope(coroutineContext).async {
             return@async ApiService().getImageData(coroutineContext, breed_name)
         }.await()
