@@ -83,7 +83,7 @@ class ImageActivity : AppCompatActivity() {
     }
 
     private fun showNoConnectionSnackbar(){
-        val toast = Snackbar.make(rootLayout, "${this.getString(R.string.no_internet_available)}", Snackbar.LENGTH_SHORT)
+        val toast = Snackbar.make(rootLayout, "${this.getString(R.string.no_internet_available)}", 500)
         toast.addCallback(object : Snackbar.Callback() {
             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                 super.onDismissed(transientBottomBar, event)
