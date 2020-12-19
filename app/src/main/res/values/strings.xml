@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Dogs Breed</string>
     <string name="no_data_available">No Data Available</string>
+    <string name="no_internet_available">Internet Connection Not Available</string>
 </resources>

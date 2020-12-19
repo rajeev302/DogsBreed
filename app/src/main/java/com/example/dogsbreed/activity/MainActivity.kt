@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dogsbreed.R
 import com.example.dogsbreed.adapter.BreedListAdapter
+import com.example.dogsbreed.extensions.isInternetAvailable
 import com.example.dogsbreed.model.breedlist.BreedListResponseModel
 import com.example.dogsbreed.viewmodel.BreedListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,21 +34,25 @@ class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallba
         fireApiCall()
     }
 
-//    function responsible for calling api
+    //    function responsible for calling api
     private fun fireApiCall() {
-        viewmodel.getBreedList({
-            breedAdapter.notifyDataSetChanged()
-            progressBar.visibility = View.GONE
-            noDataAvailable.visibility = View.GONE
-            breedRecyclerView.visibility = View.VISIBLE
-        }, {
-            progressBar.visibility = View.GONE
-            noDataAvailable.visibility = View.VISIBLE
-            breedRecyclerView.visibility = View.GONE
-        })
+        if (this.isInternetAvailable()) {
+            viewmodel.getBreedList({
+                breedAdapter.notifyDataSetChanged()
+                progressBar.visibility = View.GONE
+                noDataAvailable.visibility = View.GONE
+                breedRecyclerView.visibility = View.VISIBLE
+            }, {
+                progressBar.visibility = View.GONE
+                noDataAvailable.visibility = View.VISIBLE
+                breedRecyclerView.visibility = View.GONE
+            })
+        } else {
+            Toast.makeText(this, "${this.getString(R.string.no_internet_available)}", Toast.LENGTH_LONG).show()
+        }
     }
 
-//    function responsible for setting up ui references
+    //    function responsible for setting up ui references
     private fun setupUi() {
         breedRecyclerView = dogs_breed_recycler_view
         noDataAvailable = no_data_available
@@ -58,7 +63,7 @@ class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallba
         breedRecyclerView.adapter = breedAdapter
     }
 
-//    callback when any breed name row is clicked
+    //    callback when any breed name row is clicked
     override fun rowClicked(position: Int) {
         val intent = Intent(this, ImageActivity::class.java)
         intent.putExtra(ImageActivity.DOG_BREED_NAME, viewmodel.breedList[position])

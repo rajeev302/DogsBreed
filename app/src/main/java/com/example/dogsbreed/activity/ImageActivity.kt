@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.dogsbreed.R
+import com.example.dogsbreed.extensions.isInternetAvailable
 import com.example.dogsbreed.viewmodel.ImageActivityViewModel
 import kotlinx.android.synthetic.main.activity_image.*
 
@@ -38,43 +39,47 @@ class ImageActivity : AppCompatActivity() {
         fireApiCall()
     }
 
-//    function to get data for particular breed name and then fetch image using glide
+    //    function to get data for particular breed name and then fetch image using glide
     private fun fireApiCall() {
-        viewmodel.getImageData({
-            Glide.with(this).load(viewmodel.imageData.message)
-                .listener(object : RequestListener<Drawable> { // glide listener to know the image loading failure or success
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        Toast.makeText(
-                            this@ImageActivity,
-                            "failed to laod the image",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return false
-                    }
+        if (this.isInternetAvailable()) { // check if internet is available
+            viewmodel.getImageData({
+                Glide.with(this).load(viewmodel.imageData.message)
+                        .listener(object : RequestListener<Drawable> { // glide listener to know the image loading failure or success
+                            override fun onLoadFailed(
+                                    e: GlideException?,
+                                    model: Any?,
+                                    target: Target<Drawable>?,
+                                    isFirstResource: Boolean
+                            ): Boolean {
+                                Toast.makeText(
+                                        this@ImageActivity,
+                                        "failed to laod the image",
+                                        Toast.LENGTH_LONG
+                                ).show()
+                                return false
+                            }
 
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        breedNameTextView.text = viewmodel.breedName
-                        progressBar.visibility = View.GONE
-                        return false
-                    }
-                }).into(breedImageView)
-        }, {
-            Toast.makeText(this, "failed to get the data from api", Toast.LENGTH_LONG).show()
-        })
+                            override fun onResourceReady(
+                                    resource: Drawable?,
+                                    model: Any?,
+                                    target: Target<Drawable>?,
+                                    dataSource: DataSource?,
+                                    isFirstResource: Boolean
+                            ): Boolean {
+                                breedNameTextView.text = viewmodel.breedName
+                                progressBar.visibility = View.GONE
+                                return false
+                            }
+                        }).into(breedImageView)
+            }, {
+                Toast.makeText(this, "failed to get the data from api", Toast.LENGTH_LONG).show()
+            })
+        } else {
+            Toast.makeText(this, "${this.getString(R.string.no_internet_available)}", Toast.LENGTH_LONG).show()
+        }
     }
 
-//    function for setting up UI references.
+    //    function for setting up UI references.
     private fun setupUi() {
         breedImageView = breed_image_view
         breedNameTextView = breed_name
