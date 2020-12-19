@@ -2,6 +2,7 @@ package com.example.dogsbreed.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.example.dogsbreed.model.imageData.ImageDataResponseModel
 import com.example.dogsbreed.repository.Respository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,12 +16,14 @@ class ImageActivityViewModel(application: Application): AndroidViewModel(applica
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
-    val breedName: String = ""
+    var breedName: String = ""
+    lateinit var imageData: ImageDataResponseModel
 
     private val repository = Respository()
 
     fun getImageData(success: () -> Unit, failure: (message: String) -> Unit) = launch {
         repository.getImageData(breedName)?.let {
+            imageData = it
             success.invoke()
         }?:run {
             failure.invoke("failed to get message")

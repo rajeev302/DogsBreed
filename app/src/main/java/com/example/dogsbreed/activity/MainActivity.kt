@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallba
         breedRecyclerView = dogs_breed_recycler_view
         noDataAvailable = no_data_available
         progressBar = progress_bar
-        breedAdapter = BreedListAdapter(this, viewmodel.breedList)
+        breedAdapter = BreedListAdapter(this, viewmodel.breedList, this)
         val layoutManager = LinearLayoutManager(this)
         breedRecyclerView.layoutManager = layoutManager
         breedRecyclerView.adapter = breedAdapter

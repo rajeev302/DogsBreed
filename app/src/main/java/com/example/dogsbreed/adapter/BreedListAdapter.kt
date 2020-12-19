@@ -10,7 +10,8 @@ import com.example.dogsbreed.R
 
 class BreedListAdapter(
     val context: Context,
-    val dataSet: MutableList<String>
+    val dataSet: MutableList<String>,
+    val callback: BreedLisAdapterCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -28,8 +29,13 @@ class BreedListAdapter(
         return BreedListViewHolder(itemView)
     }
 
-    inner class BreedListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class BreedListViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView) {
         val breedTextView: TextView = itemView.findViewById(R.id.breed_name_text_view)
+        init {
+            itemView.setOnClickListener {
+                callback.rowClicked(adapterPosition)
+            }
+        }
     }
 
     interface BreedLisAdapterCallback {
