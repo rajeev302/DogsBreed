@@ -17,9 +17,9 @@ class ApiService{
         callResult.execute().body()
     }.await()
 
-    suspend fun getImageData(coroutineContext: CoroutineContext, commentNumber: String): ImageDataResponseModel? = CoroutineScope(coroutineContext).async {
+    suspend fun getImageData(coroutineContext: CoroutineContext, breed_name: String): ImageDataResponseModel? = CoroutineScope(coroutineContext).async {
         val apiService = NetworkManager.makeRetrofitObject(Service::class.java, Constants.BASE_URL)
-        val callResult = apiService.getImageData(commentNumber)
+        val callResult = apiService.getImageData(breed_name)
         callResult.execute().body()
     }.await()
 }
