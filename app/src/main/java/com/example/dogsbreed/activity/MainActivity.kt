@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallba
         fireApiCall()
     }
 
-    private fun fireApiCall(){
+    private fun fireApiCall() {
         viewmodel.getBreedList({
             breedAdapter.notifyDataSetChanged()
             progressBar.visibility = View.GONE
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallba
         })
     }
 
-    private fun setupUi(){
+    private fun setupUi() {
         breedRecyclerView = dogs_breed_recycler_view
         noDataAvailable = no_data_available
         progressBar = progress_bar

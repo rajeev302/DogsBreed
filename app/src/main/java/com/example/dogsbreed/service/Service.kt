@@ -11,5 +11,5 @@ interface Service {
     fun getBreedList(): Call<BreedListResponseModel>
 
     @GET("breed/{breed_name}/images/random")
-    fun getImageData(@Path("breed_name")breed_name: String): Call<ImageDataResponseModel>
+    fun getImageData(@Path("breed_name") breed_name: String): Call<ImageDataResponseModel>
 }

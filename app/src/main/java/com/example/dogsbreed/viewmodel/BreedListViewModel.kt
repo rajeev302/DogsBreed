@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 //import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class BreedListViewModel(application: Application): AndroidViewModel(application), CoroutineScope {
+class BreedListViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
@@ -31,7 +31,7 @@ class BreedListViewModel(application: Application): AndroidViewModel(application
                 breedList.add(it)
             }
             success.invoke()
-        }?:run {
+        } ?: run {
             failure.invoke("failed to get message")
         }
     }

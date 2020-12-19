@@ -11,7 +11,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlin.coroutines.CoroutineContext
 
-class Respository: CoroutineScope {
+class Respository : CoroutineScope {
     private val job: Job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO

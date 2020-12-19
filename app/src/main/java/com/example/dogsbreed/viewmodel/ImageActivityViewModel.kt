@@ -10,7 +10,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class ImageActivityViewModel(application: Application): AndroidViewModel(application),
+class ImageActivityViewModel(application: Application) : AndroidViewModel(application),
     CoroutineScope {
     private val job = Job()
     override val coroutineContext: CoroutineContext
@@ -25,7 +25,7 @@ class ImageActivityViewModel(application: Application): AndroidViewModel(applica
         repository.getImageData(breedName)?.let {
             imageData = it
             success.invoke()
-        }?:run {
+        } ?: run {
             failure.invoke("failed to get message")
         }
     }

@@ -38,37 +38,42 @@ class ImageActivity : AppCompatActivity() {
         fireApiCall()
     }
 
-    private fun fireApiCall(){
+    private fun fireApiCall() {
         viewmodel.getImageData({
-                               Glide.with(this).load(viewmodel.imageData.message).listener(object : RequestListener<Drawable>{
-                                   override fun onLoadFailed(
-                                       e: GlideException?,
-                                       model: Any?,
-                                       target: Target<Drawable>?,
-                                       isFirstResource: Boolean
-                                   ): Boolean {
-                                       Toast.makeText(this@ImageActivity, "failed to laod the image", Toast.LENGTH_LONG).show()
-                                       return false
-                                   }
+            Glide.with(this).load(viewmodel.imageData.message)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        Toast.makeText(
+                            this@ImageActivity,
+                            "failed to laod the image",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return false
+                    }
 
-                                   override fun onResourceReady(
-                                       resource: Drawable?,
-                                       model: Any?,
-                                       target: Target<Drawable>?,
-                                       dataSource: DataSource?,
-                                       isFirstResource: Boolean
-                                   ): Boolean {
-                                       breedNameTextView.text = viewmodel.breedName
-                                       progressBar.visibility = View.GONE
-                                       return false
-                                   }
-                               }).into(breedImageView)
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        breedNameTextView.text = viewmodel.breedName
+                        progressBar.visibility = View.GONE
+                        return false
+                    }
+                }).into(breedImageView)
         }, {
 
         })
     }
 
-    private fun setupUi(){
+    private fun setupUi() {
         breedImageView = breed_image_view
         breedNameTextView = breed_name
         progressBar = image_progress
