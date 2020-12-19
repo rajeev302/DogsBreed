@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Dogs Breed</string>
+    <string name="no_data_available">No Data Available</string>
 </resources>
