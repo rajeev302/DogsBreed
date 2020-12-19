@@ -7,8 +7,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface Service {
-    @GET("issues")
-    fun getBreedList(): Call<List<BreedListResponseModel>>
+    @GET("breeds/list/all")
+    fun getBreedList(): Call<BreedListResponseModel>
 
     @GET("breed/{breed_name}/images/random")
     fun getImageData(@Path("breed_name")breed_name: String): Call<ImageDataResponseModel>

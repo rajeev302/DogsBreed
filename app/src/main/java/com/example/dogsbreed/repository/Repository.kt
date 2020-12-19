@@ -16,7 +16,7 @@ class Respository: CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.IO
 
-    suspend fun getBreedList(): List<BreedListResponseModel>? {
+    suspend fun getBreedList(): BreedListResponseModel? {
         return CoroutineScope(coroutineContext).async {
             return@async ApiService().getBreedList(coroutineContext)
         }.await()
