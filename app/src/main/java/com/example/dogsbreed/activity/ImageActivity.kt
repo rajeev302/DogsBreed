@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -17,6 +18,7 @@ import com.bumptech.glide.request.target.Target
 import com.example.dogsbreed.R
 import com.example.dogsbreed.extensions.isInternetAvailable
 import com.example.dogsbreed.viewmodel.ImageActivityViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_image.*
 
 class ImageActivity : AppCompatActivity() {
@@ -29,6 +31,7 @@ class ImageActivity : AppCompatActivity() {
     private lateinit var breedNameTextView: TextView
     private lateinit var viewmodel: ImageActivityViewModel
     private lateinit var progressBar: ProgressBar
+    private lateinit var rootLayout: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,12 +78,24 @@ class ImageActivity : AppCompatActivity() {
                 Toast.makeText(this, "failed to get the data from api", Toast.LENGTH_LONG).show()
             })
         } else {
-            Toast.makeText(this, "${this.getString(R.string.no_internet_available)}", Toast.LENGTH_LONG).show()
+            showNoConnectionSnackbar()
         }
+    }
+
+    private fun showNoConnectionSnackbar(){
+        val toast = Snackbar.make(rootLayout, "${this.getString(R.string.no_internet_available)}", Snackbar.LENGTH_SHORT)
+        toast.addCallback(object : Snackbar.Callback() {
+            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                super.onDismissed(transientBottomBar, event)
+                finish()
+            }
+        })
+        toast.show()
     }
 
     //    function for setting up UI references.
     private fun setupUi() {
+        rootLayout = root_layout
         breedImageView = breed_image_view
         breedNameTextView = breed_name
         progressBar = image_progress

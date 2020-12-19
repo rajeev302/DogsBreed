@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.example.dogsbreed.adapter.BreedListAdapter
 import com.example.dogsbreed.extensions.isInternetAvailable
 import com.example.dogsbreed.model.breedlist.BreedListResponseModel
 import com.example.dogsbreed.viewmodel.BreedListViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 //lateinit variables which is initialized later
@@ -24,6 +26,7 @@ private lateinit var breedRecyclerView: RecyclerView
 private lateinit var breedAdapter: BreedListAdapter
 private lateinit var noDataAvailable: TextView
 private lateinit var progressBar: ProgressBar
+private lateinit var rootLayout: ConstraintLayout
 
 class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,12 +51,13 @@ class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallba
                 breedRecyclerView.visibility = View.GONE
             })
         } else {
-            Toast.makeText(this, "${this.getString(R.string.no_internet_available)}", Toast.LENGTH_LONG).show()
+            showNoConnectionSnackbar()
         }
     }
 
     //    function responsible for setting up ui references
     private fun setupUi() {
+        rootLayout = breed_list_root_layout
         breedRecyclerView = dogs_breed_recycler_view
         noDataAvailable = no_data_available
         progressBar = progress_bar
@@ -61,6 +65,17 @@ class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallba
         val layoutManager = LinearLayoutManager(this)
         breedRecyclerView.layoutManager = layoutManager
         breedRecyclerView.adapter = breedAdapter
+    }
+
+    private fun showNoConnectionSnackbar(){
+        val toast = Snackbar.make(rootLayout, "${this.getString(R.string.no_internet_available)}", Snackbar.LENGTH_SHORT)
+        toast.addCallback(object : Snackbar.Callback() {
+            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                super.onDismissed(transientBottomBar, event)
+                finish()
+            }
+        })
+        toast.show()
     }
 
     //    callback when any breed name row is clicked

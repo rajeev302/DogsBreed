@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_grey"
+    android:id="@+id/breed_list_root_layout"
     tools:context=".activity.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
