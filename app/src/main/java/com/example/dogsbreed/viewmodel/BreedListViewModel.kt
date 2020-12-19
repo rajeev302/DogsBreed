@@ -1,20 +1,12 @@
 package com.example.dogsbreed.viewmodel
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import com.example.dogsbreed.model.breedlist.BreedListResponseModel
 import com.example.dogsbreed.repository.Respository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-//import com.example.dogsbreed.model.breedlist.BreedListResponseModel
-//import com.example.dogsbreed.repository.Respository
-//import kotlinx.coroutines.CoroutineScope
-//import kotlinx.coroutines.Dispatchers
-//import kotlinx.coroutines.Job
-//import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class BreedListViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
