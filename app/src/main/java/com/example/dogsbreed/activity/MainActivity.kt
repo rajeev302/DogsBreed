@@ -17,6 +17,7 @@ import com.example.dogsbreed.model.breedlist.BreedListResponseModel
 import com.example.dogsbreed.viewmodel.BreedListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
+//lateinit variables which is initialized later
 private lateinit var viewmodel: BreedListViewModel
 private lateinit var breedRecyclerView: RecyclerView
 private lateinit var breedAdapter: BreedListAdapter
@@ -26,13 +27,13 @@ private lateinit var progressBar: ProgressBar
 class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        viewmodel = ViewModelProvider(this).get(BreedListViewModel::class.java)
-
+        setContentView(R.layout.activity_main) // setting layout to be shown on the screen
+        viewmodel = ViewModelProvider(this).get(BreedListViewModel::class.java) // getting viewmodel from viewmodel provider
         setupUi()
         fireApiCall()
     }
 
+//    function responsible for calling api
     private fun fireApiCall() {
         viewmodel.getBreedList({
             breedAdapter.notifyDataSetChanged()
@@ -46,16 +47,18 @@ class MainActivity : AppCompatActivity(), BreedListAdapter.BreedLisAdapterCallba
         })
     }
 
+//    function responsible for setting up ui references
     private fun setupUi() {
         breedRecyclerView = dogs_breed_recycler_view
         noDataAvailable = no_data_available
         progressBar = progress_bar
-        breedAdapter = BreedListAdapter(this, viewmodel.breedList, this)
+        breedAdapter = BreedListAdapter(viewmodel.breedList, this)
         val layoutManager = LinearLayoutManager(this)
         breedRecyclerView.layoutManager = layoutManager
         breedRecyclerView.adapter = breedAdapter
     }
 
+//    callback when any breed name row is clicked
     override fun rowClicked(position: Int) {
         val intent = Intent(this, ImageActivity::class.java)
         intent.putExtra(ImageActivity.DOG_BREED_NAME, viewmodel.breedList[position])

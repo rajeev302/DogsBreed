@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
+//extension function on Context to check if the internet is available
 fun Context.isInternetAvailable(): Boolean {
     var result = false
     val connectivityManager =

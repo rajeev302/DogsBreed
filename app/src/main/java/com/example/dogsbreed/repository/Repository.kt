@@ -1,8 +1,6 @@
 package com.example.dogsbreed.repository
 
-import android.content.Context
 import com.example.dogsbreed.apiservice.ApiService
-import com.example.dogsbreed.extensions.isInternetAvailable
 import com.example.dogsbreed.model.breedlist.BreedListResponseModel
 import com.example.dogsbreed.model.imageData.ImageDataResponseModel
 import kotlinx.coroutines.CoroutineScope

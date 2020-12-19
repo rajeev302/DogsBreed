@@ -13,7 +13,7 @@ class ApiService {
     suspend fun getBreedList(coroutineContext: CoroutineContext): BreedListResponseModel? =
         CoroutineScope(coroutineContext).async {
             val apiService =
-                NetworkManager.makeRetrofitObject(Service::class.java, Constants.BASE_URL)
+                NetworkManager.makeRetrofitObject(Service::class.java, Constants.BASE_URL) // creating retrofit object for api call
             val callResult = apiService.getBreedList()
             callResult.execute().body()
         }.await()
@@ -22,8 +22,8 @@ class ApiService {
         coroutineContext: CoroutineContext,
         breed_name: String
     ): ImageDataResponseModel? = CoroutineScope(coroutineContext).async {
-        val apiService = NetworkManager.makeRetrofitObject(Service::class.java, Constants.BASE_URL)
+        val apiService = NetworkManager.makeRetrofitObject(Service::class.java, Constants.BASE_URL) // creating retrofit object for api call
         val callResult = apiService.getImageData(breed_name)
         callResult.execute().body()
-    }.await()
+    }.await() // awaiting for the api result
 }

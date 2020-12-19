@@ -20,9 +20,10 @@ import kotlinx.android.synthetic.main.activity_image.*
 
 class ImageActivity : AppCompatActivity() {
     companion object {
-        const val DOG_BREED_NAME = "dogBreedName"
+        const val DOG_BREED_NAME = "dogBreedName" // constant object used for data passing between intents
     }
 
+    //lateinit variables which is initialized later
     private lateinit var breedImageView: ImageView
     private lateinit var breedNameTextView: TextView
     private lateinit var viewmodel: ImageActivityViewModel
@@ -31,17 +32,17 @@ class ImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image)
-        viewmodel = ViewModelProvider(this).get(ImageActivityViewModel::class.java)
-        viewmodel.breedName = intent.getStringExtra(DOG_BREED_NAME)
-
+        viewmodel = ViewModelProvider(this).get(ImageActivityViewModel::class.java) // getting viewmodel from viewmodel provider
+        viewmodel.breedName = intent.getStringExtra(DOG_BREED_NAME) // getting breed name from intent string extra
         setupUi()
         fireApiCall()
     }
 
+//    function to get data for particular breed name and then fetch image using glide
     private fun fireApiCall() {
         viewmodel.getImageData({
             Glide.with(this).load(viewmodel.imageData.message)
-                .listener(object : RequestListener<Drawable> {
+                .listener(object : RequestListener<Drawable> { // glide listener to know the image loading failure or success
                     override fun onLoadFailed(
                         e: GlideException?,
                         model: Any?,
@@ -69,10 +70,11 @@ class ImageActivity : AppCompatActivity() {
                     }
                 }).into(breedImageView)
         }, {
-
+            Toast.makeText(this, "failed to get the data from api", Toast.LENGTH_LONG).show()
         })
     }
 
+//    function for setting up UI references.
     private fun setupUi() {
         breedImageView = breed_image_view
         breedNameTextView = breed_name
